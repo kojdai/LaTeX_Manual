@@ -1,0 +1,113 @@
+\documentclass[]{ltjsarticle}
+\usepackage{bm} %ボールドの利用
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{ascmac}
+\usepackage[margin=15mm]{geometry}
+\usepackage{verbatim}
+\usepackage{url}
+\usepackage{physics}
+%
+\renewcommand{\thefootnote}{$^{\dagger\arabic{footnote}}$}
+
+%句読点を置換
+\usepackage{newunicodechar}
+\newunicodechar{、}{\char"FF0C}
+\newunicodechar{。}{\char"FF0E}
+
+%本文開始
+\begin{document}
+  %タイトル
+  \title{VSCodeによる \LaTeX 環境構築}
+  \author{}
+  \date{\today}
+  \maketitle
+  
+  本稿は全くの初心者が文書作成ツールである \LaTeX の環境構築を完了することを目的として作成する．まずはじめにTexWorks\footnote{公式の \LaTeX 編集ソフトであるが，最低限の機能しか備えておらず，使い勝手が悪いためこれでの編集は避けたい．}をインストールし，その後VSCode\footnote{Visual Studio Codeのことで，Microsoftが提供しているプログラミング用のコードエディタである．様々な機能を有しておりTexWorksに比べて使い勝手がよく，多くの人がこれで \TeX の編集を行う．}での環境構築を行う．
+  
+  \section{ \LaTeX の環境構築}
+  
+  \subsection{ \LaTeX とは(既に知っている人は次節へ)}
+  
+  \LaTeX (ラテフ)について解説する前にその元となっているソフトである \TeX (テフ)について解説する。 \TeX とはオープンソースの組版ソフトである。組版は印刷用語で、活字を組んで版を作ることを意味する。 \TeX は、コンピュータでテキストと図版をうまく配置して版にあたるもの(pdf等のファイル)を出力するためのソフトである。特に数式の組版について定評があり、数式をテキスト形式で表す際の事実上の標準となっている。例えば以下のように数式を記述することができる。
+
+  \[y= \frac{m}{k} \qty{\left(v_0 \sin\theta + \frac{m}{kg} \right) \qty( 1 - e^{\frac{k}{m} t} ) - gt } + y_0\]
+
+  次に、 \LaTeX について解説する。 \LaTeX とは機能強化された \TeX である。 \LaTeX になったことで、文書の論理的な構造と視覚的なレイアウトを分けて考えることができるようになった。たとえば、「はじめに」という$\overset{セクション}{節}$の見出しがあれば、文書ファイルには
+  \begin{verbatim}
+    \section{はじめに}
+  \end{verbatim}
+  のように書いておく。この\verb|\section{はじめに}|という命令が、紙面上のデザイン、例えば「14ポイントのゴシック体で左寄せ、前後の空白はそれぞれ何ミリを標準とし$\cdots$」というレイアウトに対応するといったことは、様式、版ごとに別ファイル(クラスファイル)に記述されている。標準のクラスファイルのデザインが気に入らないなら、自由に変更できる。クラスファイルだけ変更すれば同じ文書ファイルでも違ったレイアウトで出力できる。これが、文書の論理的な構造と視覚的なレイアウトを分けて考えることができるということである。
+
+  さて、 \LaTeX にも様々な種類があるが、本稿で扱うのはLua\LaTeX というものである。これ以前に日本語の扱いに特化した \LaTeX であるp\LaTeX という \LaTeX があった。これをさらに改良したものがLua\LaTeX だ。
+
+  \subsection{TexWorksのインストール(既にインストールされている人は次節へ)}
+  \LaTeX を利用するにはWindowsなら，TexWorksという \LaTeX 編集ソフトをインストールする必要がある．TexWorksは以下のリンク先のinstall-tl-windows.exeをクリックすることでインストール可能である．\\
+  \url{https://www.tug.org/texlive/acquire-netinstall.html}
+  
+  ダウンロード\footnote{インターネットからファイルを取得することをダウンロードと呼ぶ．}が完了したらインストーラからインストール\footnote{インターネットから取得したものを自分のコンピュータで使えるようにすることをインストールと呼ぶ．}する必要がある．これには通常かなりの時間がかかるので辛抱強く待っていただきたい．インストールが完了したらTexWorksの準備は完了である．
+
+  \section{VSCodeの環境構築}
+  \subsection{VSCodeとは(既に知っている人は次節へ)}
+
+  VSCodeとはVisual Studio CodeのことでMicrosoftが提供しているプログラミング用のコードエディタである．様々な拡張機能が存在しており，それらをインストールすることでTexWorksよりも遥かに便利に \TeX の編集を行うことができる．例えば，コマンドの入力補完や出力したい記号から \TeX コマンドの入力等々挙げれば枚挙にいとまがない．
+
+  \subsection{VSCodeのインストール(既にインストールされている人は次節へ)}
+
+  さて，VSCodeは以下のリンクからダウンロードすることができる．\\
+  \url{https://code.visualstudio.com/download}
+
+  ダウンロードが完了したらインストーラーに従ってインストールを行う．インストールが完了したら日本語に変更したい人はExtensionのタブからJapanese Packageをインストールするとよい．
+
+  \subsection{VSCodeのセットアップ}
+  はじめにExtension(拡張機能)からLaTeX Workshop\footnote{この拡張機能を使ってTexWorksを裏側から呼び出し機能のみ利用し，VSCodeで動かすことが可能になる．}, ~ vscode-pdf\footnote{VSCode上でTexのプレビューを表示する際に，pdfを表示する必要があるのだが，そのために必要な機能．}, ~ indent-colorizer\footnote{インデントが色付けされるため見やすくなる．必須ではないが便利な機能．}等をインストールする．
+
+  次にLaTeX Workshopの設定を変更する．冒頭に述べた通り \TeX には様々な種類があるため，この設定によってLua\LaTeX がコンパイルされるようにする．まずWindowsの人は"Crtl"+","を押すことによってVSCodeの設定を開く．次に右上にある四角に折り返しの矢印が書いてあるマークを押すことによってsettings.jsonを起動する．これはVSCodeの設定が記述されているファイルで，ここにLaTeX Workshopの設定を追記する．以下に示すサイトの手順5からコードをコピーする．このとき既になにか記述されている人はその記述の最後に ~ "," ~ を追記してから以下をコピペする．そうでない人はそのままコピペすれば良い．\\
+  \url{https://zenn.dev/thor/articles/732c3e007f77ee}\\
+  これで一通りの設定が完了したので次章で動作を確認を行う．
+  
+  \section{動作確認}
+  
+  ここまでで環境構築が完了したので最後に動作確認を行う．以下のサンプルコードをコピペしてうまく動作すれば設定終了である．以下のサンプルコードで示している\verb|\documentclass|とは、作成する文書の種類を示しており、今回は一般的なA4文書である\textbf{ltjsarticle}を使用している。また、$3$行目以降の\verb|\usepackage{...}|では、作成する文書内で使用するライブラリを宣言している。\LaTeX には様々なライブラリが用意されているため、目的に応じて様々なライブラリを使用するとよい。他にも、\verb|\usepackage{newunicodecha}|を使用することで文字コードを変更することによって、句読点とコンパピリオドを自動で置換することなども可能である。ここまでの記述を\textbf{プリアンブル}といい、文書の設定部分に値する。本文は\verb|\begin{document}|と\verb|\end{document}|の中に書く必要がある。タイトルの出力は、\verb|\title{タイトル}|, ~ \verb|\author{著者}|, ~ \verb|\date{\today}|のように内容を設定し\footnote{\verb|\today|とすることで、作成日を自動で入力することができる。}、\verb|\maketitle|とすることで設定したタイトルを出力することができる。
+
+  動作させるには、まず"Crtl" + "s"を入力することで、ファイルを保存する。このとき、ファイルの拡張子\footnote{ファイルのほげほげ.pptxなどの.なんちゃらの部分を拡張子という}を.texにする必要がある。保存が完了したらもう一度"Crtl" + "s"を入力することでコンパイル\footnote{ここでは \TeX のコードのpdf化を意味する。}が始まる。画面左下のぐるぐるがチェックマークに変わったら、"Crtl" + "Alt" + "v"を入力することで作成したpdfファイルを表示させることができる。
+
+  \begin{itembox}[l]{サンプルコード}
+    \begin{verbatim}
+      \documentclass[12ptj]{ltjsarticle}
+      %LuaLatexの文章をフォントサイズ12で作成
+      \usepackage{graphicx} %図形の利用
+      \usepackage{bm} %ボールドの利用
+      \usepackage{newtxtext} %本文にTimes系フォントの利用
+      \usepackage{ascmac}%枠線で囲めるようになる
+      \usepackage[margin=15mm]{geometry}%余白を小さくする
+      \usepackage{tikz}%Tikzを用いた作図
+      \renewcommand{\baselinestretch}{0.78}%行間を詰める
+      \renewcommand{\thefootnote}{$^{\dagger\arabic{footnote}}$}
+      %脚注をダガーにする
+      
+      %句読点を置換
+      \usepackage{newunicodechar}
+      \newunicodechar{、}{\char"FF0C}
+      \newunicodechar{。}{\char"FF0E}
+    
+  
+      %本文開始
+      \begin{document}
+      %タイトル
+      \title{動作確認}
+      \author{朕}
+      \date{\today}
+      \maketitle
+  
+      朕の文章がうまく動作しておる．
+      \end{document}"
+    \end{verbatim}
+  \end{itembox}
+
+\begin{thebibliography}{1}
+  奥村、黒木(2020),『改訂第8版 \LaTeXe 美文書作成入門』, 技術評論社
+\end{thebibliography}
+
+
+\end{document}
