@@ -1,0 +1,9 @@
+# Fdb version 4
+["lualatex"] 0 "LaTex_Manual.tex" "out/LaTex_Manual.pdf" "LaTex_Manual" 0 -1
+  "LaTex_Manual.tex" 0 -1 0 ""
+  "out/LaTex_Manual.aux" 0 -1 0 "lualatex"
+  (generated)
+  "out/LaTex_Manual.aux"
+  "out/LaTex_Manual.log"
+  "out/LaTex_Manual.pdf"
+  (rewritten before read)

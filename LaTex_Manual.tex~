@@ -84,15 +84,13 @@
   \subsection{VSCodeのセットアップ}
   はじめにExtension(拡張機能)からLaTeX Workshop\footnote{この拡張機能を使ってTexWorksを裏側から呼び出し機能のみ利用し，VSCodeで動かすことが可能になる．}, indent-colorizer\footnote{インデントが色付けされるため見やすくなる．必須ではないが便利な機能．}等をインストールする．
 
-  次に\LaTeX Workshopの設定を変更する．冒頭に述べた通り \TeX には様々な種類があるため，この設定によってLua\LaTeX がんンパイルされるようにする．まずWindowsの人は``Crtl''+``,''を押すことによってVSCodeの設定を開く．次に右上にある四角に折り返しの矢印が書いてあるマークを押すことによってsettings.jsonを起動する．これはVSCodeの設定が記述されているファイルで，ここにLaTeX Workshopの設定を追記する．以下に示すコードをコピーする．このとき既になにか記述されている人はその記述の最後に~ ``,'' ~ を追記してから以下をコピペする．そうでない人はそのままコピペすれば良い．なお，pdfから選択してコピーするのではなく，同じディレクトリに格納してあるsettings.jsonファイルから直接コピーすればよい．
-
-  \lstinputlisting[caption = VSCodeのsettings.jsonに追記]{settings.json}
+  次に\LaTeX Workshopの設定を変更する．冒頭に述べた通り \TeX には様々な種類があるため，この設定によってLua\LaTeX がコンパイルされるようにする．まずWindowsの人は``Crtl''+``,''を押すことによってVSCodeの設定を開く．次に右上にある四角に折り返しの矢印が書いてあるマークを押すことによってsettings.jsonを起動する．これはVSCodeの設定が記述されているファイルで，ここにLaTeX Workshopの設定を追記する．以下に示すコードをコピーする．このとき既になにか記述されている人はその記述の最後に~ ``,'' ~ を追記してから以下をコピペする．そうでない人はそのままコピペすれば良い．
 
   これで一通りの設定が完了したので次章で動作を確認を行う．
 
   \section{動作確認}
 
-  ここまでで環境構築が完了したので最後に動作確認を行う．以下のサンプルコードをコピペしてうまく動作すれば設定終了である．以下のサンプルコードで示している\verb|\documentclass|とは、作成する文書の種類を示しており、今回は一般的なA4文書である\textbf{ltjsarticle}を使用している。また、$3$行目以降の\verb|\usepackage{...}|では、作成する文書内で使用するライブラリを宣言している。\LaTeX には様々なライブラリが用意されているため、目的に応じて様々なライブラリを使用するとよい。他にも、\verb|\usepackage{newunicodecha}|を使用することで、句読点とコンマピリオドを自動で置換することなども可能である。ここまでの記述を\textbf{プリアンブル}といい、文書の設定部分に値する。本文は\verb|\begin{document}|と\verb|\end{document}|の中に書く必要がある。タイトルの出力は、\verb|\title{タイトル}|, ~ \verb|\author{著者}|, ~ \verb|\date{\today}|のように内容を設定し\footnote{\verb|\today|とすることで、作成日を自動で入力することができる。}、\verb|\maketitle|とすることで設定したタイトルを出力することができる。
+  ここまでで環境構築が完了したので最後に動作確認を行う．以下のサンプルコードをコピペしてうまく動作すれば設定終了である．以下のサンプルコードで示している\verb|\documentclass|とは、作成する文書の種類を示しており、今回は一般的なA4文書である\textbf{ltjsarticle}を使用している。また、$3$行目以降の\verb|\usepackage{...}|では、作成する文書内で使用するライブラリを宣言している。\LaTeX には様々なライブラリが用意されているため、目的に応じて様々なライブラリを使用するとよい。他にも、\verb|\usepackage{newunicodecha}|を使用することで文字コードを変更することによって、句読点とコンパピリオドを自動で置換することなども可能である。ここまでの記述を\textbf{プリアンブル}といい、文書の設定部分に値する。本文は\verb|\begin{document}|と\verb|\end{document}|の中に書く必要がある。タイトルの出力は、\verb|\title{タイトル}|, ~ \verb|\author{著者}|, ~ \verb|\date{\today}|のように内容を設定し\footnote{\verb|\today|とすることで、作成日を自動で入力することができる。}、\verb|\maketitle|とすることで設定したタイトルを出力することができる。
 
   動作させるには、まず``Crtl'' +
   ``s''を入力することで、ファイルを保存する。このとき、ファイルの拡張子\footnote{ファイルのほげほげ.pptxなどの.なんちゃらの部分を拡張子という}を.texにする必要がある。保存が完了したらもう一度``Crtl''
@@ -100,10 +98,12 @@
   のコードのpdf化を意味する。}が始まる。画面左下のぐるぐるがチェックマークに変わったら、``Crtl''
   + ``Alt'' + ``v''を入力することで作成したpdfファイルを表示させることができる。
 
-  \lstinputlisting[caption = サンプルコード]{example.tex}
+  \pagebreak
+  \lstinputlisting[language=LaTeX]{example.tex}
 
-  \begin{thebibliography}{99}
-    \bibitem{} 奥村、黒木(2020),『改訂第8版 \LaTeXe 美文書作成入門』, 技術評論社
+
+  \begin{thebibliography}{1}
+      奥村、黒木(2020),『改訂第8版 \LaTeXe 美文書作成入門』, 技術評論社
   \end{thebibliography}
 
 
