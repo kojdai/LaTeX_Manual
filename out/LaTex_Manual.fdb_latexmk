@@ -1,5 +1,5 @@
 # Fdb version 4
-["lualatex"] 1771283546.3783 "LaTex_Manual.tex" "out/LaTex_Manual.pdf" "LaTex_Manual" 1771283548.87398 0
+["lualatex"] 1771283682.54949 "LaTex_Manual.tex" "out/LaTex_Manual.pdf" "LaTex_Manual" 1771283684.97715 0
   "/home/rsdlab/.texlive2023/texmf-var/luatex-cache/generic/fonts/otl/haranoajigothic-medium.luc" 1753342863.68931 1924610 5ad0ab270dd7b2d968c525a623c6f575 ""
   "/home/rsdlab/.texlive2023/texmf-var/luatex-cache/generic/fonts/otl/haranoajimincho-regular.luc" 1753342861.24828 2011208 896bb74978c1fb2dba5f7bcf7d26c84d ""
   "/home/rsdlab/.texlive2023/texmf-var/luatex-cache/generic/fonts/otl/lmmono10-regular.luc" 1753411263.80354 81819 c1a1831503f38fe92f18da76596f7b9d ""
@@ -234,7 +234,7 @@
   "/var/lib/texmf/web2c/luahbtex/lualatex.fmt" 1753386169 12231669 a6d069c682925218d061b30fa94a0d1a ""
   "LaTex_Manual.tex" 1771283329.97347 9820 195c1d395fc5b3c631c6984e388f799d ""
   "example.tex" 1771283506.51337 453 c850463bdd3241ef11d4bf95f9ab2d22 ""
-  "out/LaTex_Manual.aux" 1771283548.41151 1364 27cc982a4897d4204bb2bb306dc334d7 "lualatex"
+  "out/LaTex_Manual.aux" 1771283684.52738 1364 27cc982a4897d4204bb2bb306dc334d7 "lualatex"
   "settings.json" 1771283536.95506 810 c1b00cbdab4ad8ac251625584a186c10 ""
   (generated)
   "out/LaTex_Manual.aux"
