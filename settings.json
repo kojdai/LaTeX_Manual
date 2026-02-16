@@ -14,7 +14,6 @@
       "name": "optimized_lualatexmk",
       "command": "latexmk",
       "args": [
-        "-silent",
         "-lualatex",
         "-synctex=1",
         "-interaction=nonstopmode",
