@@ -9,4 +9,4 @@ out/*.toc
 out/*.bbl
 out/*.dvi
 out/*.synctex.gz
-
+out/texmf-var/*
