@@ -13,98 +13,293 @@
 \usepackage{luatexja}
 \usepackage{listings}
 \lstset{
-  basicstyle={\ttfamily},
-  identifierstyle={\small},
-  commentstyle={\small\itshape},
-  keywordstyle={\small\bfseries},
-  ndkeywordstyle={\small},
-  stringstyle={\small\ttfamily},
-  frame={tb},
-  breaklines=true,
-  columns=fullflexible,
-  numbers=left,
-  xrightmargin=0pt, 
-  xleftmargin=3pt,
-  numberstyle={\scriptsize},
-  stepnumber=1,
-  numbersep=1pt,
-  lineskip=-0.5ex
-  }
+	basicstyle={\ttfamily},
+	identifierstyle={\small},
+	commentstyle={\small\itshape},
+	keywordstyle={\small\bfseries},
+	ndkeywordstyle={\small},
+	stringstyle={\small\ttfamily},
+	frame={tb},
+	breaklines=true,
+	columns=fullflexible,
+	numbers=left,
+	xrightmargin=0pt, 
+	xleftmargin=3pt,
+	numberstyle={\scriptsize},
+	stepnumber=1,
+	numbersep=1pt,
+	lineskip=-0.5ex
+}
 
 
-  %句読点を置換
-  \usepackage{newunicodechar}
-  \newunicodechar{、}{，}
-  \newunicodechar{。}{．}
+%句読点を置換
+\usepackage{newunicodechar}
+\newunicodechar{、}{，}
+\newunicodechar{。}{．}
 
-  %本文開始
-  \begin{document}
-  %タイトル
-  \title{VSCodeによる \LaTeX 環境構築}
-  \author{}
-  \date{\today}
-  \maketitle
+%本文開始
+\begin{document}
+%タイトル
+\title{VSCodeによる \LaTeX 環境構築}
+\author{}
+\date{\today}
+\maketitle
 
-  本稿は全くの初心者が文書作成ツールである \LaTeX の環境構築を完了することを目的として作成する．まずはじめにTexWorks\footnote{公式の \LaTeX 編集ソフトであるが，最低限の機能しか備えておらず，使い勝手が悪いためこれでの編集は避けたい．}をインストールし，その後VSCode\footnote{Visual Studio Codeのことで，Microsoftが提供しているプログラミング用のコードエディタである．様々な機能を有しておりTexWorksに比べて使い勝手がよく，多くの人がこれで \TeX の編集を行う．}での環境構築を行う．
+本稿は全くの初心者が文書作成ツールである \LaTeX の環境構築を完了することを目的として作成する．まずはじめにTexWorks
+\footnote{公式の \LaTeX 編集ソフトであるが，最低限の機能しか備えておらず，使い勝手が悪いためこれでの編集は避けたい．}をインストールし，その後VSCode\footnote{Visual Studio Codeのことで，Microsoftが提供しているプログラミング用のコードエディタである．様々な機能を有しておりTexWorksに比べて使い勝手がよく，多くの人がこれで \TeX の編集を行う．}
+での環境構築を行う．
 
-  \section{ \LaTeX の環境構築}
+\section{ \LaTeX の環境構築}
 
-  \subsection{ \LaTeX とは(既に知っている人は次節へ)}
+\subsection{ \LaTeX とは(既に知っている人は次節へ)}
 
-  \LaTeX (ラテフ)について解説する前にその元となっているソフトである \TeX (テフ)について解説する。 \TeX とはオープンソースの組版ソフトである。組版は印刷用語で、活字を組んで版を作ることを意味する。 \TeX は、コンピュータでテキストと図版をうまく配置して版にあたるもの(pdf等のファイル)を出力するためのソフトである。特に数式の組版について定評があり、数式をテキスト形式で表す際の事実上の標準となっている。例えば以下のように数式を記述することができる。
+\LaTeX (ラテフ)について解説する前にその元となっているソフトである \TeX (テフ)について解説する。 \TeX とはオープンソースの組版ソフトである。組版は印刷用語で、活字を組んで版を作ることを意味する。 \TeX は、コンピュータでテキストと図版をうまく配置して版にあたるもの(pdf等のファイル)を出力するためのソフトである。特に数式の組版について定評があり、数式をテキスト形式で表す際の事実上の標準となっている。例えば以下のように数式を記述することができる。
 
-  \[y= \frac{m}{k} \left\{\left(v_0 \sin\theta + \frac{m}{kg} \right) \left( 1 - e^{\frac{k}{m} t} \right) - gt \right\} + y_0\]
+\[y= \frac{m}{k} \left\{\left(v_0 \sin\theta + \frac{m}{kg} \right) \left( 1 - e^{\frac{k}{m} t} \right) - gt \right\} + y_0\]
 
-  次に、 \LaTeX について解説する。 \LaTeX とは機能強化された \TeX である。 \LaTeX になったことで、文書の論理的な構造と視覚的なレイアウトを分けて考えることができるようになった。たとえば、「はじめに」という$\overset{セクション}{節}$の見出しがあれば、文書ファイルには
+次に、 \LaTeX について解説する。 \LaTeX とは機能強化された \TeX である。 \LaTeX になったことで、文書の論理的な構造と視覚的なレイアウトを分けて考えることができるようになった。たとえば、「はじめに」という$\overset{セクション}{節}$の見出しがあれば、文書ファイルには
 \begin{verbatim}
-    \section{はじめに}
-  \end{verbatim}
-  のように書いておく。この\verb|\section{はじめに}|という命令が、紙面上のデザイン、例えば「14ポイントのゴシック体で左寄せ、前後の空白はそれぞれ何ミリを標準とし$\cdots$」というレイアウトに対応するといったことは、様式、版ごとに別ファイル(クラスファイル)に記述されている。標準のクラスファイルのデザインが気に入らないなら、自由に変更できる。クラスファイルだけ変更すれば同じ文書ファイルでも違ったレイアウトで出力できる。これが、文書の論理的な構造と視覚的なレイアウトを分けて考えることができるということである。
+		\section{はじめに}
+	\end{verbatim}
+	のように書いておく。この\verb|\section{はじめに}|という命令が、紙面上のデザイン、例えば「14ポイントのゴシック体で左寄せ、前後の空白はそれぞれ何ミリを標準とし$\cdots$」というレイアウトに対応するといったことは、様式、版ごとに別ファイル(クラスファイル)に記述されている。標準のクラスファイルのデザインが気に入らないなら、自由に変更できる。クラスファイルだけ変更すれば同じ文書ファイルでも違ったレイアウトで出力できる。これが、文書の論理的な構造と視覚的なレイアウトを分けて考えることができるということである。
 
-  さて、 \LaTeX にも様々な種類があるが、本稿で扱うのはLua\LaTeX というものである。これ以前に日本語の扱いに特化した \LaTeX であるp\LaTeX という \LaTeX があった。これをさらに改良したものがLua\LaTeX だ。
+	さて、 \LaTeX にも様々な種類があるが、本稿で扱うのはLua\LaTeX というものである。これ以前に日本語の扱いに特化した \LaTeX であるp\LaTeX という \LaTeX があった。これをさらに改良したものがLua\LaTeX だ。
 
-  \subsection{TexWorksのインストール(既にインストールされている人は次節へ)}
-  \LaTeX を利用するにはWindowsなら，TexWorksという \LaTeX 編集ソフトをインストールする必要がある．TexWorksは以下のリンク先のinstall-tl-windows.exeをクリックすることでインストール可能である．\\
-  \url{https://www.tug.org/texlive/acquire-netinstall.html}
+	\subsection{TexWorksのインストール(既にインストールされている人は次節へ)}
+	\LaTeX を利用するにはWindowsなら，TexWorksという \LaTeX 編集ソフトをインストールする必要がある．TexWorksは以下のリンク先のinstall-tl-windows.exeをクリックすることでインストール可能である．\\
+	\url{https://www.tug.org/texlive/acquire-netinstall.html}
 
-  ダウンロード\footnote{インターネットからファイルを取得することをダウンロードと呼ぶ．}が完了したらインストーラからインストール\footnote{インターネットから取得したものを自分のコンピュータで使えるようにすることをインストールと呼ぶ．}する必要がある．これには通常かなりの時間がかかるので辛抱強く待っていただきたい．インストールが完了したらTexWorksの準備は完了である．
+	ダウンロード\footnote{インターネットからファイルを取得することをダウンロードと呼ぶ．}が完了したらインストーラからインストール\footnote{インターネットから取得したものを自分のコンピュータで使えるようにすることをインストールと呼ぶ．}する必要がある．これには通常かなりの時間がかかるので辛抱強く待っていただきたい．インストールが完了したらTexWorksの準備は完了である．
 
-  \section{VSCodeの環境構築}
-  \subsection{VSCodeとは(既に知っている人は次節へ)}
+	\section{VSCodeの環境構築}
+	\subsection{VSCodeとは(既に知っている人は次節へ)}
 
-  VSCodeとはVisual Studio CodeのことでMicrosoftが提供しているプログラミング用のコードエディタである．様々な拡張機能が存在しており，それらをインストールすることでTexWorksよりも遥かに便利に \TeX の編集を行うことができる．例えば，コマンドの入力補完や出力したい記号から \TeX コマンドの入力等々挙げれば枚挙にいとまがない．
+	VSCodeとはVisual Studio CodeのことでMicrosoftが提供しているプログラミング用のコードエディタである．様々な拡張機能が存在しており，それらをインストールすることでTexWorksよりも遥かに便利に \TeX の編集を行うことができる．例えば，コマンドの入力補完や出力したい記号から \TeX コマンドの入力等々挙げれば枚挙にいとまがない．
 
-  \subsection{VSCodeのインストール(既にインストールされている人は次節へ)}
+	\subsection{VSCodeのインストール(既にインストールされている人は次節へ)}
 
-  さて，VSCodeは以下のリンクからダウンロードすることができる．\\
-  \url{https://code.visualstudio.com/download}
+	さて，VSCodeは以下のリンクからダウンロードすることができる．\\
+	\url{https://code.visualstudio.com/download}
 
-  ダウンロードが完了したらインストーラーに従ってインストールを行う．インストールが完了したら日本語に変更したい人はExtensionのタブからJapanese Packageをインストールするとよい．
+	ダウンロードが完了したらインストーラーに従ってインストールを行う．インストールが完了したら日本語に変更したい人はExtensionのタブからJapanese Packageをインストールするとよい．
 
-  \subsection{VSCodeのセットアップ}
-  はじめにExtension(拡張機能)からLaTeX Workshop\footnote{この拡張機能を使ってTexWorksを裏側から呼び出し機能のみ利用し，VSCodeで動かすことが可能になる．}, indent-colorizer\footnote{インデントが色付けされるため見やすくなる．必須ではないが便利な機能．}等をインストールする．
+	\subsection{VSCodeのセットアップ}
+	はじめにExtension(拡張機能)からLaTeX Workshop\footnote{この拡張機能を使ってTexWorksを裏側から呼び出し機能のみ利用し，VSCodeで動かすことが可能になる．}, indent-colorizer\footnote{インデントが色付けされるため見やすくなる．必須ではないが便利な機能．}等をインストールする．
 
-  次に\LaTeX Workshopの設定を変更する．冒頭に述べた通り \TeX には様々な種類があるため，この設定によってLua\LaTeX がんンパイルされるようにする．まずWindowsの人は``Crtl''+``,''を押すことによってVSCodeの設定を開く．次に右上にある四角に折り返しの矢印が書いてあるマークを押すことによってsettings.jsonを起動する．これはVSCodeの設定が記述されているファイルで，ここにLaTeX Workshopの設定を追記する．以下に示すコードをコピーする．このとき既になにか記述されている人はその記述の最後に~ ``,'' ~ を追記してから以下をコピペする．そうでない人はそのままコピペすれば良い．なお，pdfから選択してコピーするのではなく，同じディレクトリに格納してあるsettings.jsonファイルから直接コピーすればよい．
+	次に\LaTeX Workshopの設定を変更する．冒頭に述べた通り \TeX には様々な種類があるため，この設定によってLua\LaTeX がんンパイルされるようにする．まずWindowsの人は``Ctrl''+``,''を押すことによってVSCodeの設定を開く．次に右上にある四角に折り返しの矢印が書いてあるマークを押すことによってsettings.jsonを起動する．これはVSCodeの設定が記述されているファイルで，ここにLaTeX Workshopの設定を追記する．以下に示すコードをコピーする．このとき既になにか記述されている人はその記述の最後に~ ``,'' ~ を追記してから以下をコピペする．そうでない人はそのままコピペすれば良い．なお，pdfから選択してコピーするのではなく，同じディレクトリに格納してあるsettings.jsonファイルから直接コピーすればよい．
 
-  \lstinputlisting[caption = VSCodeのsettings.jsonに追記]{settings.json}
+	\lstinputlisting[caption = VSCodeのsettings.jsonに追記]{settings.json}
 
-  これで一通りの設定が完了したので次章で動作を確認を行う．
+	これで一通りの設定が完了したので次章で動作を確認を行う．
 
-  \section{動作確認}
+	\section{動作確認}
 
-  ここまでで環境構築が完了したので最後に動作確認を行う．以下のサンプルコードをコピペしてうまく動作すれば設定終了である．以下のサンプルコードで示している\verb|\documentclass|とは、作成する文書の種類を示しており、今回は一般的なA4文書である\textbf{ltjsarticle}を使用している。また、$3$行目以降の\verb|\usepackage{...}|では、作成する文書内で使用するライブラリを宣言している。\LaTeX には様々なライブラリが用意されているため、目的に応じて様々なライブラリを使用するとよい。他にも、\verb|\usepackage{newunicodecha}|を使用することで、句読点とコンマピリオドを自動で置換することなども可能である。ここまでの記述を\textbf{プリアンブル}といい、文書の設定部分に値する。本文は\verb|\begin{document}|と\verb|\end{document}|の中に書く必要がある。タイトルの出力は、\verb|\title{タイトル}|, ~ \verb|\author{著者}|, ~ \verb|\date{\today}|のように内容を設定し\footnote{\verb|\today|とすることで、作成日を自動で入力することができる。}、\verb|\maketitle|とすることで設定したタイトルを出力することができる。
+	ここまでで環境構築が完了したので最後に動作確認を行う．以下のサンプルコードをコピペしてうまく動作すれば設定終了である．以下のサンプルコードで示している\verb|\documentclass|とは、作成する文書の種類を示しており、今回は一般的なA4文書である\textbf{ltjsarticle}を使用している。また、$3$行目以降の\verb|\usepackage{...}|では、作成する文書内で使用するライブラリを宣言している。\LaTeX には様々なライブラリが用意されているため、目的に応じて様々なライブラリを使用するとよい。他にも、\verb|\usepackage{newunicodecha}|を使用することで、句読点とコンマピリオドを自動で置換することなども可能である。ここまでの記述を\textbf{プリアンブル}といい、文書の設定部分に値する。本文は\verb|\begin{document}|と\verb|\end{document}|の中に書く必要がある。タイトルの出力は、\verb|\title{タイトル}|, ~ \verb|\author{著者}|, ~ \verb|\date{\today}|のように内容を設定し\footnote{\verb|\today|とすることで、作成日を自動で入力することができる。}、\verb|\maketitle|とすることで設定したタイトルを出力することができる。
 
-  動作させるには、まず``Crtl'' +
-  ``s''を入力することで、ファイルを保存する。このとき、ファイルの拡張子\footnote{ファイルのほげほげ.pptxなどの.なんちゃらの部分を拡張子という}を.texにする必要がある。保存が完了したらもう一度``Crtl''
-  + ``s''を入力することでコンパイル\footnote{ここでは \TeX
-  のコードのpdf化を意味する。}が始まる。画面左下のぐるぐるがチェックマークに変わったら、``Crtl''
-  + ``Alt'' + ``v''を入力することで作成したpdfファイルを表示させることができる。
+	動作させるには、まず``Ctrl'' +
+	``s''を入力することで、ファイルを保存する。このとき、ファイルの拡張子\footnote{ファイルのほげほげ.pptxなどの.なんちゃらの部分を拡張子という}を.texにする必要がある。保存が完了したらもう一度``Ctrl''
+	+ ``s''を入力することでコンパイル\footnote{ここでは \TeX
+	のコードのpdf化を意味する。}が始まる。画面左下のぐるぐるがチェックマークに変わったら、``Ctrl''
+	+ ``Alt'' + ``v''を入力することで作成したpdfファイルを表示させることができる。
 
-  \lstinputlisting[caption = サンプルコード]{example.tex}
+	\lstinputlisting[caption = サンプルコード]{example.tex}
+	
+\section{\LaTeX の書き方}
+\subsection{\LaTeX での文章の書き方}
+\LaTeX ではWordなどのように書いた通りに文書は生成されない．代表的なものとして，改行や半角スペースの取り扱いがある．
 
-  \begin{thebibliography}{99}
-    \bibitem{} 奥村、黒木(2020),『改訂第8版 \LaTeXe 美文書作成入門』, 技術評論社
-  \end{thebibliography}
+\LaTeX で改行を行うには，エディタ上で単に改行するだけでは無効である．改行(段落変え)を行うには**空行を挿入する**必要がある．また，文章を改行するということは，パラグラフ(段落)が変わることを意味するため，改行された文章は自動的に文頭が字下げされる．
+
+もし，事情があって単純に「改行」のみを行いたい場合は，文末に \verb|\\| を入力することで強制改行が可能である．ただし，パラグラフ内で改行してはいけない．
+
+空白の取り扱いについても注意が必要である．挿入した半角スペースは1マス分のみ文書に反映され，それ以上連続して入力した半角スペースは無視される．全角スペースは文字として認識されるため，意図しない空白が入らないよう注意が必要である．
+
+もし，スペースをあける必要がある場合には，横のスペースなら\verb|\hspace{3mm}|，縦のスペースなら\verb|\vspace{3mm}|などと記述することで表現可能である．
+
+\subsection{特殊文字とコメントアウト}
+\LaTeX には，コメントアウトなどのプログラムの命令として予約されている記号がある．これらはそのまま書いても出力されず，エラーの原因となる場合がある．代表的なものに \verb|# $ % & _ { }| などがある．これらを文字として出力したい場合は，直前にバックスラッシュ記号をつけ，\verb|\$| や \verb|\%| のように記述する必要がある(これをエスケープ処理と呼ぶ)．
+
+また，\verb|%|から行末までの文字は「コメント」として扱われ，コンパイル後の文書には一切出力されない．メモ書きや，一時的に文章を隠したい場合に非常に便利である．改行は無視されるので，これを利用して例えば以下のように書くと便利である．
+
+\begin{lstlisting}[caption=コメントアウトの利用例, label=beamer-sample]
+\LaTeXとはランポート
+% ランポートについて調査をする
+によって作成された
+% いい感じの説明を調べる
+文書作成ソフトである．
+\end{lstlisting}
+
+\subsection{\LaTeX での図形の挿入}
+\LaTeX で画像を挿入するには，\texttt{figure} 環境を使用する．Wordのように画像をドラッグ\&ドロップするのではなく，画像ファイルの名前を指定して読み込む方式をとる．
+
+基本形は以下の通りである．
+
+\begin{lstlisting}[caption=図の挿入例, label=fig-sample]
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\linewidth]{fig1.png}
+    \caption{図の説明}
+    \label{fig:example}
+\end{figure}
+\end{lstlisting}
+
+ここで重要なポイントをいくつか挙げる．
+\begin{itemize}
+    \item \textbf{[htbp]}: 図の出力位置を指定するオプション．h(here), t(top), b(bottom), p(後方にpageを確保)の順に優先順位を指定しており，「可能な限りその場に，無理ならページ上部に...」という意味になる．これを指定しないと図が勝手にドキュメントの最後などに飛んでいくことがある．
+    \item \textbf{width}: 図の大きさを指定する．\verb|0.8\linewidth| と指定すると，本文の幅の80\%の大きさで表示される．cm単位などで指定することも可能である．
+    \item \textbf{captionとlabel}: 図番号と参照用のラベルである．本文中で「図\verb|~\ref{fig:example}|に示すように...」と参照するために必須である．ここで，チルダ(\verb|~|)は改行なしの半角スペースを意味する．適切なスペースを空けるとともに，図番号のみが改行されてしまわないようにするために，図や表，参考文献の引用をする際にはこれが必要である．
+\end{itemize}
+
+\subsection{\LaTeX での表の作成}
+表は \texttt{table} 環境の中に \texttt{tabular} 環境を作成して記述する．
+
+\begin{lstlisting}[caption=表の作成例, label=table-sample]
+\begin{table}[htbp]
+    \centering
+    \caption{表の説明}
+    \label{tab:example}
+    \begin{tabular}{|c|l|r|} \hline
+        項目 & 左寄せ & 右寄せ \\ \hline \hline
+        A   & Apple & 100 \\ \hline
+        B   & Banana & 200 \\ \hline
+    \end{tabular}
+\end{table}
+\end{lstlisting}
+
+\verb+\begin{tabular}{|c|l|r|}+ の部分は，列の配置を指定している．\texttt{c}は中央揃え(center)，\texttt{l}は左揃え(left)，\texttt{r}は右揃え(right)を意味し，$\mid$ は縦線を引くことを意味する．
+データ同士の区切りには \verb|&| を使用し，行の終わりには \verb|\\| を記述する．横線を引きたい箇所には \verb|\hline| を記述する．
+
+見ての通り，図や表の作成は非常に記述が煩雑である．これを毎回手打ちするのは苦行に等しいため，次節で解説する「スニペット」の活用を強く推奨する．
+
+\subsection{VS Codeのスニペットについて}
+前節までに紹介した図や表のコード，あるいは数式の定型文などを毎回手打ちしたり，過去のファイルからコピーしてくるのは非効率である．VS Codeにはスニペットという機能があり，よく使うコードを登録して一瞬で呼び出すことができる．
+
+設定方法は，VS Codeの左下の歯車マークから「ユーザースニペット (User Snippets)」を選択し，\texttt{latex} を選択する（\texttt{latex.json}が開く）．ここに以下のような形式で記述する．
+
+\begin{lstlisting}[caption=latex.jsonへの記述例, label=snippet-json]
+"Figure Environment": {
+    "prefix": "figure",
+    "body": [
+        "\\begin{figure}[htbp]",
+        "\t\\centering",
+        "\t\\includegraphics[width=${1:0.8}\\linewidth]{${2:filename}}",
+        "\t\\caption{${3:caption}}",
+        "\t\\label{fig:${4:label}}",
+        "\\end{figure}"
+    ],
+    "description": "Insert a figure environment"
+}
+\end{lstlisting}
+
+このように登録しておくと，\LaTeX ファイルの編集画面で「figure」とタイプしてTabキーを押すだけで，上記のスニペットが展開される．\verb|${1:0.8}| のような記述は，展開後のカーソル位置と初期値を表しており，Tabキーを押すだけで次の入力箇所（ファイル名やキャプション）へ移動できる．
+
+よく使うプリアンブルや表組み，数式環境も同様に登録しておけば，文書作成の速度は飛躍的に向上する．「面倒な記述は一度だけ書いて保存する」のが賢い \LaTeX ユーザである．
+
+\section{BibTeXによる参考文献管理}
+	参考文献の管理は大規模な文書を執筆する上で重要な問題である．
+	仮に学位論文などを執筆する際，参考文献は一般に30件を超えるだろう．
+	それらの文献情報をまとめる際，毎回書誌情報を調べ，手打ちで入力するのは大変な手間である．
+
+	この手間をほとんど0にしてくれるツールがBibTeXという文献管理ツールである．
+
+	\subsection{BibTeXの仕組み}
+	BibTeXでは，参考文献のリストを`.tex'ファイルに直接書くのではなく，`.bib'という拡張子の別ファイル(データベース)に保存する．
+	
+	bibファイルに記述する情報は一般に公開されている．例えば，Google Scholarなどで論文や書籍を検索し，「引用」ボタンを押すと「BibTeX」というリンクが表示される．これをクリックすると以下のようなテキストが表示される．
+
+\begin{lstlisting}[caption=references.bibの中身, label=bib-sample]
+@book{okumura2020,
+  title={改訂第8版 LaTeX2e 美文書作成入門},
+  author={奥村晴彦 and 黒木裕介},
+  year={2020},
+  publisher={技術評論社}
+}
+\end{lstlisting}
+
+	これをコピーして，`references.bib`などの名前で保存するだけでよい．自分で著者名やタイトルを手打ちする必要はない．
+	ここで最も重要なのは，1行目の \verb|okumura2020| という部分である．これを\textbf{引用キー}と呼ぶ．
+
+	\subsection{本文での引用方法}
+	データベースの準備ができたら，本文中で引用キーを使って呼び出す．
+	例えば，「奥村らによると〜」と書きたい場合，以下のように記述する．
+
+\begin{lstlisting}[caption=本文での引用方法, label=cite-sample]
+\documentclass{ltjsarticle}
+% (中略)
+
+\begin{document}
+
+\LaTeX の解説書として，奥村らによる書籍~\cite{okumura2020}が有名である．
+
+% 参考文献リストを出力したい場所に以下を書く
+\bibliographystyle{junsrt} % 引用順に並べるスタイル
+\bibliography{references}  % .bibファイルのファイル名(拡張子不要)
+
+\end{document}
+\end{lstlisting}
+
+	このように記述してコンパイルすると，\verb|\cite{...}|の部分が自動的に[1]のような番号に置き換わり，巻末に参考文献リストが自動生成される．
+	
+	本来，BibTeXの処理は複雑な手順(コンパイルを4回繰り返すなど)が必要だが，本稿の環境構築で導入したVSCodeを使用していれば，普段通り保存するだけで全自動で処理が行われる．
+	
+	BibTeXでは引用した参考文献のみ，参考文献一覧が生成されるため，読んだ論文の書誌情報はすべてbibファイルの保存するようにすると良い．
+
+
+\section{Beamerでのスライド作成}
+\LaTeX は論文だけでなく，プレゼンテーション用のスライドを作成することも可能である．\LaTeX でスライドを作成するためのドキュメントクラスを\textbf{Beamer}と呼ぶ．
+
+\subsection{Beamerの基本構造}
+スライドを作成する場合，文書クラス(\verb|\documentclass|)を通常の \verb|ltjsarticle| から \verb|beamer| に変更する必要がある．基本的なコマンドは論文作成時と同じだが，スライド1枚分を \verb|frame| 環境で囲む点が異なる．
+
+以下に，Beamerを使用したスライド作成の最小構成を示す．これを新しいファイル(例：\verb|slide.tex|)として保存し，コンパイルすることでスライドが生成される．
+
+\begin{lstlisting}[caption=Beamerのサンプルコード, label=beamer-sample]
+\documentclass[unicode, 12pt]{beamer}
+\usepackage{luatexja}
+
+% テーマの選択(見た目を変える)
+\usetheme{Madrid} 
+
+% タイトル情報
+\title{Beamerによるスライド作成}
+\author{朕}
+\date{\today}
+
+\begin{document}
+
+% タイトルスライド
+\begin{frame}
+	\titlepage
+\end{frame}
+
+% 目次スライド
+\begin{frame}{目次}
+	\tableofcontents
+\end{frame}
+
+% コンテンツスライド
+\begin{frame}{Beamerの特徴}
+	\begin{itemize}
+		\item \LaTeX のコマンドがそのまま使える
+		\item 数式が綺麗に表示できる
+		\begin{equation}
+			e^{i\pi} + 1 = 0
+		\end{equation}
+		\item 朕のスライドが動いておる．
+	\end{itemize}
+\end{frame}
+
+\end{document}
+\end{lstlisting}
+
+\subsection{テーマの変更}
+Beamerの大きな特徴として，1行書き換えるだけでデザインを一新できる「テーマ」機能がある．サンプルコード内の \verb|\usetheme{Madrid}| の部分を，\verb|Metropolis| や \verb|Copenhagen| などに変更することで，好みのデザインでスライドを作成することができる．
+
+数式を多用する理系のプレゼンテーションにおいて，\LaTeX (Beamer)によるスライド作成は非常に強力なツールとなるため，ぜひ習得されたい．
+
+	\begin{thebibliography}{99}
+		\bibitem{} 奥村、黒木,『改訂第8版 \LaTeXe 美文書作成入門』, 技術評論社
+	\end{thebibliography}
 
 
 \end{document}
